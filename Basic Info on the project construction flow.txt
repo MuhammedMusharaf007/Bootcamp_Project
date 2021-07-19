@@ -1,0 +1,25 @@
+Genskill Fullstack Bootcamp Project
+--------------------------------------------------------------------------------------
+# Project model chosen : Personal Information Manager
+--------------------------------------------------------------------------------------
+General TBDs:
+    User Authentication system.
+    Hashtag Filtering.
+    View notes
+        ○ See all the notes. Sorted by date.
+        ○ Click on a note to see details
+        ○ Edit the title, text or hashtags of the note
+    Search views
+        ○ List of all hashtags. If you click on one, you can see all notes with that
+        hashtag
+        ○ Search box. You can enter a word and hit enter to see all notes which
+        have that word. Similar to the “see all notes” view.
+--------------------------------------------------------------------------------------
+Construction Flow:
+``````````````````
+# App factory basic creation
+    # Initiating Database
+    # Registering blueprints
+# Authentication blueprint
+# Info manager blueprint
+# Markup and Styling
