@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<title>{% block title %}{% endblock %} - RafBook</title>
+<h1>RafBook</h1>
+<h2>A minimalistic personal information manager</h2>
+<nav>
+    <ul>
+        {% if g.user %}
+            <li><span><h1>{{g.user['username'] }}</h1></span></li>
+            <li><a href="{{ url_for('auth.logout') }}">Log Out</a></li>
+        {% else %}
+            <li><a href="{{ url_for('auth.register') }}">Register</a></li>
+            <li><a href="{{ url_for('auth.login') }}">Log In</a></li>
+        {% endif %}
+    </ul>
+</nav>
+<section>
+    <header>
+        {% block header %}{% endblock %}
+    </header>
+    {% for message in get_flashed_messages() %}
+        <div class="flash">{{ message }}</div>
+    {% endfor %}
+    {% block content %}{% endblock %}
+</section>
