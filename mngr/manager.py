@@ -111,4 +111,15 @@ def update(id):
             db.commit()
             return redirect(url_for('blog.index'))
     return render_template('manager/update.html', note = note)
-    
+
+
+@bp.route('/<int:id>/delete', methods=('POST',))
+@login_required
+def delete(id):
+    get_note(id)
+    db = get_db()
+    db.execute('DELETE FROM notes WHERE id = ?',(id,))
+    db.commit()
+    db.execute('DELETE FROM tags_notes WHERE notes = ?',(id,))
+    db.commit()
+    return redirect(url_for('manager.index'))
