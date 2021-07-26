@@ -1,4 +1,4 @@
-from typing_extensions import NotRequired
+
 from flask import (Blueprint, flash, g, redirect, render_template, request, url_for)
 from werkzeug.exceptions import abort
 from mngr.auth import login_required
@@ -13,8 +13,8 @@ def index():
     notes = db.execute(
         'SELECT n.id, n.userid, n.created, n.title, n.body,'
         ' u.id, u.username,'
-        ' t.name,'
-        'FROM notes n, user u, tags t, tags_notes tn'
+        ' t.name'
+        ' FROM notes n, user u, tags t, tags_notes tn'
         ' WHERE n.userid = u.id AND t.id = tn.tags AND n.id = tn.notes'
         ' ORDER BY created DESC'
     ).fetchall()
@@ -55,7 +55,7 @@ def create():
                     'INSERT INTO tags_notes (notes, tags)'
                     ' VALUES (?, ?)',(note_id, tag_id)
                 )
-    	    db.commit()
+            db.commit()
             return redirect(url_for('manager.index'))
     return render_template('manager/create.html')
     

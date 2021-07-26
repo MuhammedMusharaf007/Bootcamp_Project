@@ -1,0 +1,27 @@
+{% extends 'base.html' %} 
+
+{% block header %}
+    <h1>{% block title %}Posts{% endblock %}</h1>
+    {% if g.user %}
+        <a href="{{ url_for('manager.create') }}">New</a>
+    {% endif %} 
+{% endblock %} 
+
+{% block content %}
+    {% for note in notes %}
+        <article class="note">
+            <header>
+                <div>
+                    <h1>{{ note['title'] }}</h1>
+                    <div class="about"><h2>nby {{ note['username'] }} on {{ note['created'].strftime('%Y-%m-%d') }}</h2></div>
+                </div>
+                {% if g.user['id'] == note['userid'] %}
+                    <a href="{{ url_for('manager.update', id=note['id']) }}">Edit</a>
+            </header>
+            <p>{{ note['body'] }}</p>
+        </article>
+        {% if not loop.last %} 
+            <hr>
+        {% endif %} 
+    {% endfor %} 
+{% endblock %} 
