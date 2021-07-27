@@ -12,10 +12,9 @@ def index():
     db = get_db()
     notes = db.execute(
         'SELECT n.id, n.userid, n.created, n.title, n.body,'
-        ' u.id, u.username,'
-        ' t.name'
-        ' FROM notes n, user u, tags t, tags_notes tn'
-        ' WHERE n.userid = u.id AND t.id = tn.tags AND n.id = tn.notes'
+        ' u.id, u.username'
+        ' FROM notes n, user u'
+        ' WHERE n.userid = u.id'
         ' ORDER BY created DESC'
     ).fetchall()
     return render_template('manager/index.html', notes=notes)
@@ -27,7 +26,7 @@ def create():
     if request.method == 'POST':
         title = request.form['title']
         body = request.form['body']
-        tags = request.form['tags']
+        #tags = request.form['tags']
         error = None
 
         if not title:
@@ -38,24 +37,25 @@ def create():
             db = get_db()
             db.execute(
                 'INSERT INTO notes (title, body, userid)'
-                ' VALUES (?, ?, ?)',(title, body, g.user['id'])
+                'VALUES(?, ?, ?)',(title, body, g.user['id'])
             )
-            for tag in tags:
-                db.execute(
-                    'INSERT INTO tags (name)'
-                    ' VALUES (?)',(tag)
-                )
             db.commit()
-            note_id = db.execute('SELECT id FROM notes'
-            ' WHERE title = ? AND userid = ?',(title, g.user['id']))
-            for tag in tags:
-                tag_id = db.execute('SELECT id FROM tags'
-                    ' WHERE name = ?',(tag,)).fetchone()
-                db.execute(
-                    'INSERT INTO tags_notes (notes, tags)'
-                    ' VALUES (?, ?)',(note_id, tag_id)
-                )
-            db.commit()
+            # for tag in tags:
+            #     db.execute(
+            #         'INSERT INTO tags (name)'
+            #         ' VALUES (?)',(tag)
+            #     )
+            # db.commit()
+            # note_id = db.execute('SELECT id FROM notes'
+            # ' WHERE title = ? AND userid = ?',(title, g.user['id']))
+            # for tag in tags:
+            #     tag_id = db.execute('SELECT id FROM tags'
+            #         ' WHERE name = ?',(tag,)).fetchone()
+            #     db.execute(
+            #         'INSERT INTO tags_notes (notes, tags)'
+            #         ' VALUES (?, ?)',(note_id, tag_id)
+            #     )
+            # db.commit()
             return redirect(url_for('manager.index'))
     return render_template('manager/create.html')
     
@@ -63,10 +63,9 @@ def create():
 def get_note(id, check_author=True):
     note = get_db().execute(
         'SELECT n.id, n.userid, n.created, n.title, n.body,'
-        ' u.id, u.username,'
-        ' t.name,'
-        'FROM notes n, user u, tags t, tags_notes tn'
-        ' WHERE n.userid = u.id AND t.id = tn.tags AND n.id = tn.notes'
+        ' u.id, u.username '
+        'FROM notes n, user u'
+        ' WHERE n.userid = u.id '
         'AND n.id = ?',(id,) 
     ).fetchone()
     if note is None:

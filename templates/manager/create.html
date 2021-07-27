@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block header %} 
+    <h1>{% block title %}New Note{% endblock %}</h1>
+{% endblock %}
+
+{% block content %}
+    <form method="post">
+        <label for="title"><h2>Title</h2></label>
+        <input name="title" id="title" value="{{ request.form['title'] }}" required>
+        <label for="body"><h2>Body</h2></label>
+        <textarea name="body" id="body">{{request.form['body'] }}</textarea>
+        <!--label for="tags"><h4>Tags</h4></label> --> 
+        <!-- <input name="tags" id="tags" placeholder="Separate tags using ','" value="{{ request.form['tags'] }}" multiple></label> -->
+        <hr>
+        <input type="submit" value="Save">
+    </form>
+{% endblock %}
