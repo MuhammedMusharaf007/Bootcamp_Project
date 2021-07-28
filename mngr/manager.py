@@ -21,6 +21,19 @@ def index():
     ).fetchall()
     return render_template('manager/index.html', notes=notes)
 
+@bp.route('/<tag>')
+def tagfilter(tag):
+    db = get_db()
+    notes = db.execute(
+        'SELECT n.id, n.userid, n.created, n.title, n.body,'
+        ' u.id, u.username,'
+        ' t.tag, t.id,'
+        ' tn.notes, tn.tags' 
+        ' FROM notes n, user u, tags t, tags_notes tn'
+        ' WHERE n.userid = u.id AND tn.notes=n.id AND tn.tags=t.id AND t.id = (SELECT id FROM tags WHERE tag = ?)'
+        ' ORDER BY created DESC',(tag,)
+    ).fetchall()
+    return render_template('manager/index.html', notes=notes)
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
@@ -33,6 +46,10 @@ def create():
 
         if not title:
             error = 'Title is required.'
+        db = get_db()
+        title_test = db.execute('SELECT * FROM notes WHERE title = ?',(title,)).fetchall()
+        if title_test:
+            error= 'Title Already exists.'
         if error is not None:
             flash(error)
         else:

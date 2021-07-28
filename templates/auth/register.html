@@ -1,17 +1,32 @@
 {% extends 'base.html' %}
 
 {% block header %}
-	<h1>{% block title %}Register{% endblock %}</h1>
+	{% block title %}{% endblock %}
 {% endblock %}
 
 {% block content %}
-<div class="form">
+<div class="form card" style="width: 15rem; margin-left: auto; margin-right: auto;">
 	<form method="post">
-		<label for="username"><h1>Username</h1></label>
+	<div style="text-align: center; width: 15rem;" class="card-header btn btn-primary btn-lg disabled">
+		Join us
+	</div>
+	<ul class="list-group list-group-flush">
+		<li class="list-group-item">
+		<label for="username">Username</label>
+		</li>
+		<li class="list-group-item">
 		<input name="username" id="username" required>
-		<label for="password"><h1>Password</h1></label>
+		</li>
+		<li class="list-group-item">
+		<label for="password">Password</label>
+		</li>
+		<li class="list-group-item">
 		<input type="password" name="password" id="password" required>
-		<input class="black-button" type="submit" value="Register">
+		</li>
+		<li class="list-group-item" style="align-self: center;">
+		<input class="btn btn-primary" type="submit" value="Register">
+		</li>
+	</ul>
 	</form>
 </div>
 {% endblock %}
