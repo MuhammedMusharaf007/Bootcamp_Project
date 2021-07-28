@@ -1,7 +1,7 @@
 {% extends 'base.html' %} 
 
 {% block header %}
-    <h1>{% block title %}Notes{% endblock %}</h1>
+    <h1>{% block title %}Summaries / Notes{% endblock %}</h1>
     {% if g.user %}
         <a href="{{ url_for('manager.create') }}">New</a>
     {% endif %} 
@@ -13,7 +13,8 @@
             <header>
                 <div>
                     <h1>{{ note['title'] }}</h1>
-                    <div class="about"><h2>nby {{ note['username'] }} on {{ note['created'].strftime('%Y-%m-%d') }}</h2></div>
+                    <h3>Genre : <span class="badge bg-secondary">{{ note['tag'] }}</span></h3>
+                    <div class="about text-muted"><h6>Summary by {{ note['username'] }} on {{ note['created'].strftime('%Y-%m-%d') }}</h6></div>
                 </div>
                 {% if g.user['id'] == note['userid'] %}
                     <a href="{{ url_for('manager.update', id=note['id']) }}">Edit</a>

@@ -6,11 +6,37 @@
 
 {% block content %}
     <form method="post">
-        <label for="title"><h2>Title</h2></label>
-        <input name="title" id="title" value="{{ request.form['title'] }}" required>
-        <label for="body"><h2>Body</h2></label>
-        <textarea name="body" id="body">{{request.form['body'] }}</textarea>
-        <!--label for="tags"><h4>Tags</h4></label> --> 
+        <label for="title"><h2>Title of the Book</h2></label>
+        <input name="title" id="title" value="{{ request.form['title'] }}" placeholder="Enter the name of the Book" required>
+        <label for="body"><h2>Summary / Information</h2></label>
+        <textarea name="body" id="body" placeholder="What do you think about the book?">{{request.form['body'] }}</textarea>
+        <label for="tags"><h4>Genre</h4></label> 
+        <select name="tags" id="tags">
+            <!--{% for i in tags %}
+            <option value="{{ i.name }}">{{ i.name }}</option>
+            {% endfor %} -->
+            <option value=1>Action and Adventure</option>
+            <option value=2>Classics</option>
+            <option value=3>Comic or Graphic Novel</option>
+            <option value=4>Detective and Mystery</option>
+            <option value=5>Fantasy</option>
+            <option value=6>Historical Fiction</option>
+            <option value=7>Horror</option>
+            <option value=8>Literary Fiction</option>
+            <option value=9>Romance</option>
+            <option value=10>Science Fiction</option>
+            <option value=11>Short Stories</option>
+            <option value=12>Suspense and Thrillers</option>
+            <option value=13>Women's Fiction</option>
+            <option value=14>Biography/Autobiography</option>
+            <option value=15>Cookbooks</option>
+            <option value=16>Essays</option>
+            <option value=17>History</option>
+            <option value=18>Memoir</option>
+            <option value=19>Poetry</option>
+            <option value=20>Self-Help</option>
+            <option value=21>True Crime</option>
+        </select>
         <!-- <input name="tags" id="tags" placeholder="Separate tags using ','" value="{{ request.form['tags'] }}" multiple></label> -->
         <hr>
         <input type="submit" value="Save">
