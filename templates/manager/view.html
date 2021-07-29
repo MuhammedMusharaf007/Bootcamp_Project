@@ -3,16 +3,15 @@
 {% block header %}
     <h5>{% block title %}Summaries / Notes{% endblock %}</h5>
     {% if g.user %}
-        <button type="button" class="btn btn-success" style="margin: 5px;">
+        <button type="button" class="btn btn-success">
             <a style="text-decoration:none; color:inherit;" href="{{ url_for('manager.create') }}">New</a>
         </button>
     {% endif %} 
 {% endblock %} 
 
 {% block content %}
-<div style="display: flex; gap: 1px; flex-wrap: wrap;">
     {% for note in notes %}
-        <article class="card" style="width: 13rem;">
+        <article class="card" style="width: 100%;">
             <div class="card-body">
                 <header>
                     <div>
@@ -26,8 +25,11 @@
                         <a class="card-link" style="text-decoration:none ; color: ivory;" href="{{ url_for('manager.update', id=note['id']) }}">Edit</a>
                     </button>
                 {% endif %}
+                <p class="card-text">{{ note['body'] }}</p>
             </div>
-        </article> 
+        </article>
+        {% if not loop.last %} 
+            <hr>
+        {% endif %} 
     {% endfor %} 
-</div>
 {% endblock %} 

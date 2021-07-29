@@ -1,7 +1,7 @@
 {% extends 'base.html' %} 
 
 {% block header %}
-    <h5>{% block title %}Summaries / Notes{% endblock %}</h5>
+    <h5>{% block title %}Summaries / Notes in Genre : {{ tag }}{% endblock %}</h5>
     {% if g.user %}
         <button type="button" class="btn btn-success" style="margin: 5px;">
             <a style="text-decoration:none; color:inherit;" href="{{ url_for('manager.create') }}">New</a>

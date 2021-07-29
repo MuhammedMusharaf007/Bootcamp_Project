@@ -21,7 +21,21 @@ def index():
     ).fetchall()
     return render_template('manager/index.html', notes=notes)
 
-@bp.route('/<tag>')
+@bp.route('/<title>')
+def noteview(title):
+    db = get_db()
+    notes = db.execute(
+        'SELECT n.id, n.userid, n.created, n.title, n.body,'
+        ' u.id, u.username,'
+        ' t.tag, t.id,'
+        ' tn.notes, tn.tags' 
+        ' FROM notes n, user u, tags t, tags_notes tn'
+        ' WHERE n.userid = u.id AND tn.notes=n.id AND tn.tags=t.id AND n.title = ?',(title,)
+    ).fetchall()
+    return render_template('manager/view.html', notes=notes)
+
+
+@bp.route('/tagview/<tag>')
 def tagfilter(tag):
     db = get_db()
     notes = db.execute(
@@ -30,10 +44,11 @@ def tagfilter(tag):
         ' t.tag, t.id,'
         ' tn.notes, tn.tags' 
         ' FROM notes n, user u, tags t, tags_notes tn'
-        ' WHERE n.userid = u.id AND tn.notes=n.id AND tn.tags=t.id AND t.id = (SELECT id FROM tags WHERE tag = ?)'
+        ' WHERE t.tag = ? AND n.userid = u.id AND tn.notes=n.id AND tn.tags=t.id'
         ' ORDER BY created DESC',(tag,)
     ).fetchall()
-    return render_template('manager/index.html', notes=notes)
+    return render_template('manager/tagview.html', notes=notes, tag=tag)
+
 
 @bp.route('/create', methods=('GET', 'POST'))
 @login_required
