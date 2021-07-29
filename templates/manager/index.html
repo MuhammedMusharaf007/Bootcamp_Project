@@ -2,6 +2,7 @@
 
 {% block header %}
     <h5>{% block title %}Summaries / Notes{% endblock %}</h5>
+    <h6 class="text-muted">Click on the titles to see details</h6>
     {% if g.user %}
         <button type="button" class="btn btn-success" style="margin: 5px;">
             <a style="text-decoration:none; color:inherit;" href="{{ url_for('manager.create') }}">New</a>
