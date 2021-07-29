@@ -1,1 +1,1 @@
-web: gunicorn app
+web: gunicorn app:create_app()
